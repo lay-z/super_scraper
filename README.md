@@ -1,4 +1,4 @@
-# super/_scraper
+# super_scraper
 The "super" market scraper ;)
 Very much a work in progress
 
