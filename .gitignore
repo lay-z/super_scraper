@@ -1,0 +1,12 @@
+# generic python stuff
+*.pyc
+
+# Virtual environment should be specific to machine
+# (read readme.md for more info
+venv
+
+# Pycharm stuff
+.idea
+
+# CSV files
+*.csv
