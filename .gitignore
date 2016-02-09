@@ -8,5 +8,6 @@ venv
 # Pycharm stuff
 .idea
 
-# CSV files
+# CSV files and output files
 *.csv
+*.txt

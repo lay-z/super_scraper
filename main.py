@@ -5,6 +5,8 @@ sys.stdout = open("outputTesco.txt", "w")
 
 
 
+
+
 def tescoScraper(url, end):
     increment = 20
     start = 0
