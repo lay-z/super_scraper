@@ -18,6 +18,17 @@ def writeToFile(filename, data, heading):
     :return: None
     """
 
+    headers = list(data.keys())  # Gets the dictionary keys, converts to a list
+    products = data[headers[0]]
+    prices = data[headers[1]]
+    rows = []
+
+    # Produces array in correct format to write out to csv
+    for row in range(len(products)):
+        rows.append([products[row], prices[row]])   # Adds the list for the product name and price to the "rows" list
+
+    print(rows)
+
     # Good practice to open files using "with" keyword also using "a" to append to the file rather than write over it
     with open(filename, "a") as file:
         writer = csv.writer(file, delimiter=";")
@@ -25,16 +36,8 @@ def writeToFile(filename, data, heading):
         if heading:
             writer.writerow([heading])
 
-        headers = list(data.keys())  # Gets the dictionary keys, converts to a list
-        writer.writerow(headers)  # Writers the headers to file
-        products = data[headers[0]]
-        prices = data[headers[1]]
-        rows = []
+        writer.writerow(headers)  # Writes the headers to file
 
-        for row in range(len(products)):
-            rows.append([products[row], prices[row]])   # Adds the list for the product name and price to the "rows" list
-
-        print(rows)
         writer.writerows(rows)  # Write rows takes in a list of lists, each list will be the respective values for that row
 
 
@@ -46,7 +49,7 @@ def parseResponse(response):
     :param response: requests response object
     :return: Dictionary object holding products and prices
     """
-
+    # Just to see
     print(response.url)
 
     soup = BeautifulSoup(response.text, "html.parser")
@@ -59,15 +62,15 @@ def parseResponse(response):
 
     if len(productFrames) is not 0:
         for product in productFrames:
-            if (product.h4.strong.abbr):
+            if product.h4.strong.abbr:
                 products.append(product.h4.strong.abbr["title"])  # For titles that have ... for abreviation strings
             else:
                 products.append(product.h4.strong.string)
 
             price = product.find("div", class_="typicalPrice")  # Find price section for product
 
-            if (price.span):  # Span tag only exist for "was" and "now" prices
-                price = price.find("span", "wasPrice").string.strip()
+            if price.span:  # Span tag only exist for "was" and "now" prices
+                price = price.find("span", "wasPrice").string.strip()  # Strip removes whitespaces before and after
             else:
                 price = price.h5.string.strip()
             prices.append(price)
